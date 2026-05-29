@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>  اتمنى تسامحيني ريما</title>
+    <style>
+        @font-face { font-family: 'f2'; src: url('font2.ttf'); }
+        @font-face { font-family: 'f3'; src: url('font3.otf'); }
+
+        :root { --burgundy: #3d0007; --cream: #f5f1e6; }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        html {
+            /* نثبت حجم الـ viewport على أساس 390px عرض (ايفون 14) */
+            font-size: calc(100vw / 39); /* 1rem = 1/39 من العرض */
+        }
+
+        body, html {
+            width: 100%; height: 100%;
+            background-color: var(--burgundy);
+            overflow: hidden;
+        }
+
+        /* ===== حوار أبل ===== */
+        .custom-alert {
+            position: fixed;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            /* عرض نسبي من الشاشة */
+            width: 66vw;
+            max-width: 270px;
+            background: rgba(245,241,230,0.98);
+            border-radius: 14px;
+            text-align: center;
+            z-index: 9999;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            display: none;
+            padding-top: 5vw;
+            overflow: hidden;
+            font-family: 'f2';
+        }
+        .alert-title {
+            color: var(--burgundy);
+            font-weight: bold;
+            margin-bottom: 4vw;
+            font-size: clamp(0.95rem, 4.5vw, 1.15rem);
+        }
+        .alert-btns { display: flex; border-top: 1px solid #ccc; }
+        .alert-btn {
+            flex: 1;
+            padding: 3.5vw 0;
+            cursor: pointer;
+            color: #007AFF;
+            font-weight: bold;
+            font-size: clamp(0.85rem, 4vw, 1rem);
+            border-right: 1px solid #ccc;
+        }
+        .alert-btn:last-child { border-right: none; }
+        .alert-btn:active { background: rgba(0,0,0,0.07); }
+
+        /* ===== الواجهة الرئيسية ===== */
+        #mainUI {
+            position: relative;
+            width: 100%;
+            height: 100dvh; /* dvh = الارتفاع الحقيقي بدون شريط المتصفح */
+            overflow: hidden;
+        }
+
+        /* الدانتيل - نسبة من العرض */
+        .lace-area {
+            position: absolute;
+            right: -1.3vw; top: 0;
+            width: 94%;
+            height: 120vw; /* نسبة من العرض بدل px */
+            background: url('lace_bg.png') no-repeat right top;
+            background-size: contain;
+            z-index: 1;
+        }
+
+        /* الجيف - عريض من اليمين */
+        .lady-gif {
+            position: absolute;
+            right: 0;
+            top: 2vw;
+            /* عرض نسبي: تقريباً نفس الشاشة ناقص هامش يسار */
+            width: calc(90% - 9vw);
+            height: auto;
+            /* ارتفاع أقصى نسبي */
+            max-height: 50dvh;
+            object-fit: cover;
+            object-position: top right;
+            z-index: 2;
+        }
+
+        /* نص تحت الجيف */
+        .gif-text {
+            position: absolute;
+            right: 4vw;
+            /* موقع عمودي نسبي */
+            top: 32dvh;
+            font-family: 'f2';
+            color: var(--burgundy);
+            font-weight: bold;
+            font-size: clamp(0.85rem, 4vw, 1.2rem);
+            z-index: 3;
+        }
+
+        /* السيدة الجانبية */
+        .side-lady {
+            position: absolute;
+            right: 0;
+            bottom: 13dvh;
+            width: clamp(140px, 40vw, 220px);
+            height: auto;
+            z-index: 2;
+        }
+
+        /* الظرف */
+        .env-box {
+            position: absolute;
+            left: 4vw;
+            top: 30dvh;
+            text-align: center;
+            z-index: 10;
+            cursor: pointer;
+        }
+        .envelope-img {
+            width: clamp(90px, 30vw, 130px);
+            animation: envFloat 3s ease-in-out infinite;
+        }
+        @keyframes envFloat {
+            0%,100% { transform: translateY(0); }
+            50%     { transform: translateY(-8px); }
+        }
+        .env-label {
+            color: var(--cream);
+            font-family: 'f2';
+            font-size: clamp(0.85rem, 3.5vw, 1.15rem);
+            margin-top: 1.5vw;
+            display: block;
+        }
+   /* القصيدة + وردة */
+        .poetry-area {
+            position: absolute;
+            left: 0;
+            bottom: 14dvh;
+            z-index: 10;
+            text-align: center;
+            width: clamp(160px, 46vw, 210px);
+        }
+        .poetry-text {
+            font-family: 'f3';
+            color: var(--cream);
+            font-size: clamp(0.77rem, 3vw, 1.15rem);
+            line-height: 2.2;
+            margin-bottom: 1.5vw;
+        }
+        .lily-btn {
+            width: clamp(60px, 19vw, 84px);
+            height: auto;
+            cursor: pointer;
+            animation: lilyPulse 2.5s ease-in-out infinite;
+        }
+        @keyframes lilyPulse {
+            0%,100% { transform: scale(1); }
+            50%     { transform: scale(1.1); }
+        }
+        .lily-label {
+            color: var(--cream);
+            font-family: 'f2';
+            font-size: clamp(0.6rem, 2.2vw, 0.8rem);
+            display: block;
+            margin-top: 1vw;
+        }
+
+        /* ===== البتلات ===== */
+        #petals-container {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 5;
+            overflow: hidden;
+        }
+        .petal {
+            position: absolute;
+            top: -60px;
+            background: url('petal.png') no-repeat center / contain;
+            animation: petalFall linear infinite;
+            opacity: 0.88;
+        }
+        @keyframes petalFall {
+            0%   { transform: translateY(0) rotate(0deg) scale(1); opacity: 0.9; }
+            80%  { opacity: 0.6; }
+            100% { transform: translateY(115dvh) rotate(700deg) scale(0.6); opacity: 0; }
+        }
+
+        /* ===== البوست كارد ===== */
+        .letter-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            display: none;
+            background: rgba(0,0,0,0.9);
+            z-index: 2000;
+            justify-content: center;
+            align-items: center;
+        }
+        .postcard {
+            width: 95%;
+            height: 80dvh;
+            background: url('postcard_bg.png') no-repeat center;
+            background-size: contain;
+            position: relative;
+        }
+
+       .stamp-img {
+    position: absolute;
+    top: 42dvh;     /* زدنا الرقم عشان ينزل الستامب للمربع تبعه تحت */
+    right: 4vw;     /* وزنا اليمين شوي عشان يدخل يدخل جوا المربع تماماً */
+    width: clamp(44px, 13vw, 62px);
+    height: auto;
+    z-index: 10;
+}
+
+        /* زر العودة */
+        .letter-back {
+            position: absolute;
+            top: 9dvh;
+            right: 5vw;
+            color: var(--burgundy);
+            font-family: 'f2';
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 100;
+            font-size: clamp(0.8rem, 3.5vw, 1rem);
+        }
+        .letter-back:active { opacity: 0.6; }
+
+        /* عنوان الرسالة */
+        .letter-title {
+            position: absolute;
+            top: 44dvh;
+            right: 20%;
+            font-family: 'f3';
+            font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+            color: var(--burgundy);
+            font-weight: bold;
+        }
+
+        /* جسم الرسالة - typewriter */
+        .letter-body {
+            position: absolute;
+            top: 49dvh;
+            left: 12%;
+            right: 12%;
+            text-align: center;
+            font-family: 'f3';
+            font-size: clamp(0.68rem, 2.5vw, 0.85rem);
+            line-height: 1.5;
+            color: var(--burgundy);
+            max-height: 28dvh;
+            overflow: hidden;
+            direction: rtl;
+            unicode-bidi: bidi-override;
+        }
+        .typewriter-cursor {
+            display: inline-block;
+            width: 1.5px;
+            height: 0.9em;
+            background: var(--burgundy);
+            margin-right: 1px;
+            animation: blink 0.65s infinite;
+            vertical-align: text-bottom;
+        }
+        @keyframes blink {
+            0%,100% { opacity: 1; }
+            50%     { opacity: 0; }
+        }
+
+        .blur { filter: blur(10px); transition: 0.3s; }
+    </style>
+</head>
+<body>
+
+<!-- حوار "تحبني؟" -->
+<div id="alert1" class="custom-alert" style="display:block;">
+    <div class="alert-title">تحبني ؟</div>
+    <div class="alert-btns">
+        <div class="alert-btn" onclick="handleFirstAlert()">اي</div>
+        <div class="alert-btn" onclick="handleFirstAlert()">اي</div>
+    </div>
+</div>
+
+<!-- حوار "عادي تبوسني؟" -->
+<div id="alert2" class="custom-alert">
+    <div class="alert-title">عادي تبوسني ؟</div>
+    <div class="alert-btns">
+        <!-- اموح ← انستا -->
+        <div class="alert-btn" onclick="goToInsta()">اموح</div>
+        <!-- محروم ← سناب -->
+        <div class="alert-btn" onclick="goToSnap()">محروم</div>
+    </div>
+</div>
+
+<!-- البتلات -->
+<div id="petals-container"></div>
+
+<!-- الواجهة الرئيسية -->
+<div id="mainUI" class="blur">
+    <div class="lace-area"></div>
+    <img src="lady_animated.gif" class="lady-gif" alt="">
+    <div class="gif-text">قلبٍ يفز من الفرح لين لاقاك</div>
+    <img src="lady_roses.png" class="side-lady" alt="">
+
+    <div class="env-box" onclick="showLetter()">
+        <img src="envelope_icon.png" class="envelope-img" alt="ظرف">
+        <span class="env-label">   افتحي الظرف ريمو</span>
+    </div>
+
+    <div class="poetry-area">
+        <div class="poetry-text">
+   لَكَ حَقٌّ تَزْعَلُ ثُمَّ لَكَ حَقٌّ نُرضِيكَ<br>
+            مَا أَقْوَى زَعَلْ حَبِيبِ قَلْبِي وَعَيْنِي<br>
+            مَا دَامَ قَلْبِي يَا أَرِيشَ العَيْنِ مُغْلِيكَ<br>
+            اِطْلُبْ وَلَكَ رُوحِي وَمَا فِي يَدَيْنِي<br>
+            لَا تَنْشَغِلْ مَالَكَ وَزَيْنٌ يُضَاهِيكَ<br>
+            أَبِيكَ أَنَا لَوْ كَانَ غَيْرُكَ يَبِينِي
+         </div>
+        <img src="white_lily.png" class="lily-btn" onclick="handleLily()" alt="وردة">
+        <span class="lily-label">اضغطي الوردة بعد الظرف</span>
+    </div>
+</div>
+
+<!-- البوست كارد -->
+<div class="letter-overlay" id="letterUI">
+    <div class="postcard">
+        <img src="stamp.png" class="stamp-img" alt="ستامب">
+        <div class="letter-back" onclick="hideLetter()">عودة</div>
+        <div class="letter-title">الى ريما</div>
+        <div class="letter-body" id="letterBody"></div>
+    </div>
+</div>
+
+<!-- الموسيقى -->
+<!-- غيّر background.mp3 بموسيقى الخلفية -->
+<audio id="bgMusic" src="background.mp3" loop></audio>
+<!-- غيّر celebration_music.mp3 بموسيقى الرسالة -->
+<audio id="letterMusic" src="celebration_music.mp3" loop></audio>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+<script>
+
+    /* نص الرسالة */
+    const letterText = `السلام عليكم ورحمة الله وبركاته\n\nاليوم اول ايام العيد و ثالث عيد لنا مع بعض ، كل عام وانتي بخير وكل عام وانتي عيدي ، اعتذر اني غلطت الاشهر اللي فاتت كثير وتعبتك كثير و اسلوبي كان سيء معك مع انك ماسويتي لي شي ، ومابقدر اوفيك حقك او اعوضك تعبك معي لكن بحاول بكل يوم اني اكون شخص افضل وشخص يستحق وحده مثلك ، انا احبك وفي كل يوم يزداد حبي لك مع اني سبك وما اعرف اظهر هالحب لكن سويت ذا الموقع البسيط عشانك ، احبك .\n\nمن عبد الرحمن`;
+
+    /* ===== البتلات ===== */
+    function createPetals() {
+        const c = document.getElementById('petals-container');
+        for (let i = 0; i < 40; i++) {
+            const p = document.createElement('div');
+            p.className = 'petal';
+            const s = 13 + Math.random() * 22;
+            p.style.cssText = `
+                width:${s}px; height:${s}px;
+                left:${Math.random() * 106}%;
+                animation-duration:${5 + Math.random() * 9}s;
+                animation-delay:${Math.random() * 12}s;
+                transform:rotate(${Math.floor(Math.random()*360)}deg);
+            `;
+            c.appendChild(p);
+        }
+    }
+
+    /* ===== أول حوار ===== */
+    function handleFirstAlert() {
+        document.getElementById('alert1').style.display = 'none';
+        document.getElementById('mainUI').classList.remove('blur');
+        document.getElementById('bgMusic').play().catch(()=>{});
+        createPetals();
+    }
+
+    /* ===== وردة الليلي ===== */
+    function handleLily() {
+        document.getElementById('mainUI').classList.add('blur');
+        document.getElementById('alert2').style.display = 'block';
+    }
+
+    /* اموح ← انستا */
+    function goToInsta() {
+        document.getElementById('alert2').style.display = 'none';
+        document.getElementById('mainUI').classList.remove('blur');
+        /* ============================================================ */
+        /* رابط الانستا: غيّر YOUR_INSTAGRAM_USERNAME باسم حسابك       */
+        /* ============================================================ */
+        const username = "YOUR_INSTAGRAM_USERNAME";
+        window.location.href = "instagram://user?username=" + username;
+        setTimeout(() => { window.location.href = "https://ig.me/m/" + username; }, 500);
+    }
+
+    /* محروم ← سناب */
+    function goToSnap() {
+        document.getElementById('alert2').style.display = 'none';
+        document.getElementById('mainUI').classList.remove('blur');
+        /* ============================================================ */
+        /* رابط السناب: غيّر YOUR_SNAPCHAT_USERNAME باسم حسابك         */
+        /* ============================================================ */
+        const username = "YOUR_SNAPCHAT_USERNAME";
+        window.location.href = "snapchat://add/" + username;
+        setTimeout(() => { window.location.href = "https://snapchat.com/add/" + username; }, 500);
+    }
+
+    /* ===== الظرف ===== */
+    function showLetter() {
+        document.getElementById('bgMusic').pause();
+        document.getElementById('letterUI').style.display = 'flex';
+        const lm = document.getElementById('letterMusic');
+        lm.currentTime = 0;
+        lm.play().catch(()=>{});
+        confetti({ particleCount: 70, spread: 55, origin:{y:0.35}, colors:['#c9a84c','#f5f1e6','#ff8fab'] });
+        typewriterEffect();
+    }
+
+    function hideLetter() {
+        document.getElementById('letterUI').style.display = 'none';
+        document.getElementById('letterMusic').pause();
+        document.getElementById('letterMusic').currentTime = 0;
+        document.getElementById('bgMusic').play().catch(()=>{});
+        document.getElementById('letterBody').innerHTML = '';
+    }
+
+    /* ===== typewriter بطيء ===== */
+    function typewriterEffect() {
+        const el = document.getElementById('letterBody');
+        el.innerHTML = '<span class="typewriter-cursor"></span>';
+        let i = 0;
+        const speed = 55; /* بطيء - كبّر الرقم تبطئ أكثر */
+
+        function type() {
+            if (i < letterText.length) {
+                const cur = el.querySelector('.typewriter-cursor');
+                const ch = letterText[i];
+                if (ch === '\n') cur.insertAdjacentHTML('beforebegin', '<br>');
+                else cur.insertAdjacentText('beforebegin', ch);
+                i++;
+                setTimeout(type, speed);
+            } else {
+                const cur = el.querySelector('.typewriter-cursor');
+                if (cur) cur.remove();
+            }
+        }
+        type();
+    }
+
+</script>
+</body>
+</html>
