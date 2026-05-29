@@ -52,7 +52,7 @@
             position: absolute;
             top: 46dvh; left: 12%; right: 12%;
             text-align: center;
-            font-family: 'f3';
+            font-family: 'f2';
             font-size: clamp(0.68rem, 2.5vw, 0.85rem);
             line-height: 1.5;
             color: var(--burgundy);
@@ -117,7 +117,7 @@
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
 <script>
 const letterText = `ا قمراً يمرُّ على أيّامي فيهوّن عتمته يا مَن يلينُ لها خاطري وإن أثقلته الحياة يا نعمةً أخشى عليها من عيني\nانا اسف اسف على الي صار وآسف على الوقت الي جيتك فيه وآسف على أسلوبي وآسف لأني سمحت لنفسي اني أجرحك فيه او أؤذيك فيه في الوقت الي المفروض أوقف معك فيه مدري شلون وكيف وليش صار الي صار لاكن صار الي صار ادري بوش تمرين فيه وادري ان الوقت ذا حساس مره بنسبه لك وبرضو ادري اني المفروض أكون الجدار الي تتكين عليه وانا وعدتك اني ماكون لي غير كذا وانا عند وعدي ما أقولك انسي كل شي ولا ابي اضغطك بحركه او او كلمه لا أبدا لاكن أتمنى تكونين قبلتي اعتذاري وفي الأخير أقول\nأ ُحِبُّكِ حتّى ما أُحِبُّ سِواكِ\nوما ليَ في الدنيا حبيبٌ عداكِ \n\nمن عبد الرحمن`;
- 
+
 function createPetals() {
     const c = document.getElementById('petals-container');
     for (let i = 0; i < 40; i++) {
@@ -141,16 +141,13 @@ function handleLily() {
 function goToInsta() {
     document.getElementById('alert2').style.display = 'none';
     document.getElementById('mainUI').classList.remove('blur');
-    const username = "YOUR_INSTAGRAM_USERNAME";
-    window.location.href = "instagram://user?username=" + username;
-    setTimeout(() => { window.location.href = "https://ig.me/m/" + username; }, 500);
+    window.location.href = "instagram://user?username=zkl_872";
+    setTimeout(() => { window.location.href = "https://www.instagram.com/zkl_872"; }, 500);
 }
 function goToSnap() {
     document.getElementById('alert2').style.display = 'none';
     document.getElementById('mainUI').classList.remove('blur');
-    const username = "YOUR_SNAPCHAT_USERNAME";
-    window.location.href = "snapchat://add/" + username;
-    setTimeout(() => { window.location.href = "https://snapchat.com/add/" + username; }, 500);
+    window.location.href = "https://snapchat.com/t/Fg7T9BJA";
 }
 function showLetter() {
     document.getElementById('bgMusic').pause();
@@ -191,4 +188,3 @@ function typewriterEffect() {
 </script>
 </body>
 </html>
- 
