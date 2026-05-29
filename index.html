@@ -103,7 +103,7 @@
             font-family: 'f2';
             color: var(--burgundy);
             font-weight: bold;
-            font-size: clamp(0.85rem, 4vw, 1.2rem);
+            font-size: clamp(0.85rem, 4vw, 1.6rem);
             z-index: 3;
         }
 
@@ -219,8 +219,8 @@
        .stamp-img {
     position: absolute;
     top: 42dvh;     /* زدنا الرقم عشان ينزل الستامب للمربع تبعه تحت */
-    right: 4vw;     /* وزنا اليمين شوي عشان يدخل يدخل جوا المربع تماماً */
-    width: clamp(44px, 13vw, 62px);
+    right: 3vw;     /* وزنا اليمين شوي عشان يدخل يدخل جوا المربع تماماً */
+    width: clamp(44px, 19vw, 90px);
     height: auto;
     z-index: 10;
 }
@@ -242,7 +242,7 @@
         /* عنوان الرسالة */
         .letter-title {
             position: absolute;
-            top: 44dvh;
+            top: 42dvh;
             right: 20%;
             font-family: 'f3';
             font-size: clamp(0.85rem, 3.5vw, 1.1rem);
@@ -253,7 +253,7 @@
         /* جسم الرسالة - typewriter */
         .letter-body {
             position: absolute;
-            top: 49dvh;
+            top: 46dvh;
             left: 12%;
             right: 12%;
             text-align: center;
@@ -330,7 +330,7 @@
             أَبِيكَ أَنَا لَوْ كَانَ غَيْرُكَ يَبِينِي
          </div>
         <img src="white_lily.png" class="lily-btn" onclick="handleLily()" alt="وردة">
-        <span class="lily-label">اضغطي الوردة بعد الظرف</span>
+        <span class="lily-label">اضغطي الغزال بعد الظرف</span>
     </div>
 </div>
 
@@ -339,7 +339,7 @@
     <div class="postcard">
         <img src="stamp.png" class="stamp-img" alt="ستامب">
         <div class="letter-back" onclick="hideLetter()">عودة</div>
-        <div class="letter-title">الى ريما</div>
+        <div class="letter-title"> الى أميرتي وحبيبتي ريما</div>
         <div class="letter-body" id="letterBody"></div>
     </div>
 </div>
@@ -354,8 +354,10 @@
 <script>
 
     /* نص الرسالة */
-    const letterText = `السلام عليكم ورحمة الله وبركاته\n\nاليوم اول ايام العيد و ثالث عيد لنا مع بعض ، كل عام وانتي بخير وكل عام وانتي عيدي ، اعتذر اني غلطت الاشهر اللي فاتت كثير وتعبتك كثير و اسلوبي كان سيء معك مع انك ماسويتي لي شي ، ومابقدر اوفيك حقك او اعوضك تعبك معي لكن بحاول بكل يوم اني اكون شخص افضل وشخص يستحق وحده مثلك ، انا احبك وفي كل يوم يزداد حبي لك مع اني سبك وما اعرف اظهر هالحب لكن سويت ذا الموقع البسيط عشانك ، احبك .\n\nمن عبد الرحمن`;
-
+const letterText = `ا قمراً يمرُّ على أيّامي فيهوّن عتمته يا مَن يلينُ لها خاطري وإن أثقلته الحياة يا نعمةً أخشى عليها من عيني
+انا اسف اسف على الي صار وآسف على الوقت الي جيتك فيه وآسف على أسلوبي وآسف لأني سمحت لنفسي اني أجرحك فيه او أؤذيك فيه في الوقت الي المفروض أوقف معك فيه مدري شلون وكيف وليش صار الي صار لاكن صار الي صار ادري بوش تمرين فيه وادري ان الوقت ذا حساس مره بنسبه لك وبرضو ادري اني المفروض أكون الجدار الي تتكين عليه وانا وعدتك اني ماكون لي غير كذا وانا عند وعدي ما أقولك انسي كل شي ولا ابي اضغطك بحركه او او كلمه لا أبدا لاكن أتمنى تكونين قبلتي اعتذاري وفي الأخير أقول
+أ ُحِبُّكِ حتّى ما أُحِبُّ سِواكِ
+وما ليَ في الدنيا حبيبٌ عداكِ \n\nمن عبد الرحمن`;
     /* ===== البتلات ===== */
     function createPetals() {
         const c = document.getElementById('petals-container');
